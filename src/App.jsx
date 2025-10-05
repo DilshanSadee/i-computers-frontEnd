@@ -1,16 +1,27 @@
-import "./App.css";
-import ProductCard from "./componentes/productCard";
+ import "./App.css";
+
 
 function App() {
 	return (
-		<>
-		
-		<ProductCard name = "laptop" Price = "100000" image = "https://picsum.photos/id/1/200/300"/>
-		<ProductCard name = "phone" Price = "50000" image = "https://picsum.photos/id/2/200/300"/>
-		<ProductCard name = "watch" Price = "2000" image = "https://picsum.photos/id/3/200/300"/>
-		<ProductCard name = "pen" Price = "10" image = "https://picsum.photos/id/4/200/300"/>
+		<div className="border w-[600px] h-[600px] bg-gray-400 relative not-only:">
+			<div className="w-[500px] h-[500px] bg-amber-300 flex flex-col justify-center items-center ">
+				    <div className="w-[100px] h-[100px] bg-blue-500 ">
 
-		</>
+				</div>
+				    <div className="w-[100px] h-[100px] bg-red-500 fixed left-[550px] top-[550px]">
+
+				</div>
+					<div className="w-[100px] h-[100px] bg-green-500">
+
+				</div>
+					<div className="w-[100px] h-[100px] bg-pink-500 absolute right-[500px] bottom-[0px]">
+
+				</div>
+			
+			
+			
+			</div>
+		</div>
 	);
 }
 
