@@ -6,12 +6,14 @@ import AdminPage from "./Pages/adminPage";
 import LoginPage from "./Pages/loginPage";
 import RegisterPage from "./Pages/registerPage";
 import TestPage from "./Pages/test";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
 	return (
 
 		<BrowserRouter>
+			<Toaster position="top-right"/>
 
 		<div className="w-full h-screen bg-primary text-black">
 			<Routes >

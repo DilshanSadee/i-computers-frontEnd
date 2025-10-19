@@ -12,7 +12,7 @@ export default function AdminPage(){
                     <h1>Admin Pannel</h1>
                     
                 </div> 
-                <div className="w-full h-[400px] text-black flex flex-col text-2xl">
+                <div className="w-full h-[400px] text-black flex flex-col text-2xl pl-[20px] ">
                     <a href="/admin" className="w-full flex items-center h-[50px] gap-[10px]"> <BsCardList /> Orders</a>
                     <a href="/admin/products"className="w-full flex items-center h-[50px] gap-[10px]"> <BsBoxSeam /> products</a>
                     <a href="/admin/users"className="w-full flex items-center h-[50px] gap-[10px] "><FiUserMinus />Users</a>
@@ -20,8 +20,8 @@ export default function AdminPage(){
                 </div>
             
             </div>
-            <div className="w-[calc(100%-300px)] h-full max-h-full text-4xl">
-                <div className="w-full h-full max-h-full overflow-y-scroll border-[10px] border-accent rounded-2xl ">
+            <div className="w-[calc(100%-300px)] h-full max-h-full text-4xl ">
+                <div className="w-full h-full max-h-full overflow-y-scroll border-[10px] border-accent rounded-2xl pl-[20px] ">
                    <Routes  >
                         <Route path="/" element={<h1> Orders</h1>}></Route>
                         <Route path="products" element={<h1>products</h1>}></Route>
