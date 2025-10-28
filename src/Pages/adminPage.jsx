@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import { BsBoxSeam, BsCardList } from "react-icons/bs";
 import { FiUserMinus } from "react-icons/fi";
 import { MdReviews } from "react-icons/md";
+import AdminProductPage from "./admin/adminProductPage";
+import AdminAddProductpage from "./admin/adminAddProductPage";
 
 export default function AdminPage(){
     return(
@@ -20,13 +22,14 @@ export default function AdminPage(){
                 </div>
             
             </div>
-            <div className="w-[calc(100%-300px)] h-full max-h-full text-4xl ">
+            <div className="w-[calc(100%-300px)] h-full max-h-full ">
                 <div className="w-full h-full max-h-full overflow-y-scroll border-[10px] border-accent rounded-2xl pl-[20px] ">
                    <Routes  >
                         <Route path="/" element={<h1> Orders</h1>}></Route>
-                        <Route path="products" element={<h1>products</h1>}></Route>
-                        <Route path="users" element={<h1>Users</h1>}></Route>
-                        <Route path="reviews" element={<h1>reviews</h1>}></Route>
+                        <Route path="/products" element={<AdminProductPage/>}></Route>
+                        <Route path="/add-Product" element={<AdminAddProductpage/>}></Route>
+                        <Route path="/users" element={<h1>Users</h1>}></Route>
+                        <Route path="/reviews" element={<h1>reviews</h1>}></Route>
 
                    </Routes>
                 </div>
