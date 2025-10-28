@@ -47,7 +47,7 @@ export default function AdminAddProductpage() {
         brand : brand,
         model :model,
         stock : stock,
-        isavailable : isAvailable 
+        isAvailable : isAvailable 
 
       },{
         headers :{
