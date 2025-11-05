@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AdminAddProductpage() {
-  const [productId, setProductId] = useState("");
+  const [productID, setProductID] = useState("");
   const [name, setName] = useState("");
   const [altName, setAltName] = useState("");
-  const [discription, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [labeldPrice, setLabledPrice] = useState("");
-  const [images, setImages] = useState([]);
+  const [labeledPrice, setLabeledPrice] = useState("");
+  const [images, setImages] = useState(",");
   const [category, setCategory] = useState("");
   const [model, setModel] = useState("");
   const [brand, setBrand] = useState("");
@@ -25,7 +25,7 @@ export default function AdminAddProductpage() {
       navigate("/login");
       return
     }
-    if (productId== ""|| name== ""|| altName== ""|| discription== ""){
+    if (productID== ""|| name== ""|| altName== ""|| description== ""){
       toast.error("you must be full fill all ");
       navigate("/login");
       return
@@ -36,12 +36,12 @@ export default function AdminAddProductpage() {
         const imagesArray = images.split(",")
 
       await axios.post(import.meta.env.VITE_BACKEND_URL + "/products/",{
-        productId : productId,
+        productID : productID,
         name : name,
         altName : altNameArray,
-        discription : discription,
+        description : description,
         price : price,
-        labledPrice : labeldPrice,
+        labeledPrice : labeledPrice,
         images : imagesArray,
         category : category,
         brand : brand,
@@ -76,8 +76,8 @@ export default function AdminAddProductpage() {
             <label>Product ID</label>
             <input
               type="text"
-              value={productId}
-              onChange={(e) => setProductId(e.target.value)}
+              value={productID}
+              onChange={(e) => setProductID(e.target.value)}
               className="w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl p-[20px]"
             />
             <span className="text-gray-500 text-sm block w-full text-right ">
@@ -108,8 +108,8 @@ export default function AdminAddProductpage() {
           <div className="my-[10px] w-full">
             <label>Discription</label>
             <textarea
-              value={discription}
-              onChange={(e) => setDiscription(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="w-full h-[60px] rounded-2xl px-[20px] border shadow-2xl py-[10px]"
             />
             <span className="block text-sm w-full text-right text-gray-500">
@@ -129,8 +129,8 @@ export default function AdminAddProductpage() {
             <label>Labeld price</label>
             <input
               type="number"
-              value={labeldPrice}
-              onChange={(e) => setLabledPrice(e.target.value)}
+              value={labeledPrice}
+              onChange={(e) => setLabeledPrice(e.target.value)}
               className="w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl"
             />
           </div>
