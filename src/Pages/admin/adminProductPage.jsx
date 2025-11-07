@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import Loader from "../../componentes/loader";
 import ProductDeleteButton from "../../componentes/productDeleteButton.Jsx";
 
+
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
-  const [loaded , setloaded] = useState(false);
+  const [loaded , setLoaded] = useState(false);
 
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export default function AdminProductPage() {
           axios.get(import.meta.env.VITE_BACKEND_URL + "/products").then((response) => {
       console.log(response.data);
       setProducts(response.data);
-      setloaded(true)
+      setLoaded(true)
     });
     }
  
@@ -75,8 +76,8 @@ export default function AdminProductPage() {
                   >
                     {item.isAvailable ? "Available" : "Out of Stock"}
                   </td>
-                  <td className="px-4 py-2 text-gray-400 italic">
-                    <ProductDeleteButton/>
+                  <td className="px-4 py-2 text-gray-400 ">
+                    <ProductDeleteButton productID = {item.productID} reload={()=>{setLoaded(false)}}/>
                     </td>
                 </tr>
               ))}
