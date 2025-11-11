@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../componentes/loader";
 import ProductDeleteButton from "../../componentes/productDeleteButton.Jsx";
 
@@ -9,7 +9,7 @@ import ProductDeleteButton from "../../componentes/productDeleteButton.Jsx";
 export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
   const [loaded , setLoaded] = useState(false);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(!loaded){
@@ -76,7 +76,10 @@ export default function AdminProductPage() {
                   >
                     {item.isAvailable ? "Available" : "Out of Stock"}
                   </td>
-                  <td className="px-4 py-2 text-gray-400 ">
+                  <td className="px-4 py-2 text-gray-400 inline-flex gap-2">
+                    <Link className=" px-2 py-2 w-[50px] bg-accent rounded text-center"
+                    to="/admin/update-product"
+                    state={item}>Edit</Link> 
                     <ProductDeleteButton productID = {item.productID} reload={()=>{setLoaded(false)}}/>
                     </td>
                 </tr>

@@ -10,8 +10,7 @@ export default function LoginPage() {
 
   async function login() {
     console.log("login button clicked");
-    console.log("email", email);
-    console.log("password", password);
+
 
     try {
       const res = await axios.post(

@@ -4,6 +4,7 @@ import { FiUserMinus } from "react-icons/fi";
 import { MdReviews } from "react-icons/md";
 import AdminProductPage from "./admin/adminProductPage";
 import AdminAddProductpage from "./admin/adminAddProductPage";
+import AdminUpdateProductpage from "./admin/adminupdateProductPage";
 
 export default function AdminPage(){
     return(
@@ -30,7 +31,7 @@ export default function AdminPage(){
                         <Route path="/add-Product" element={<AdminAddProductpage/>}></Route>
                         <Route path="/users" element={<h1>Users</h1>}></Route>
                         <Route path="/reviews" element={<h1>reviews</h1>}></Route>
-
+                        <Route path="/update-Product" element={<AdminUpdateProductpage/>}></Route>
                    </Routes>
                 </div>
             </div>

@@ -1,99 +1,108 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import uploadFile from "../../Utilis/mediaUploads";
 
-export default function AdminAddProductpage() {
-  const [productID, setProductID] = useState("");
-  const [name, setName] = useState("");
-  const [altName, setAltName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [labeledPrice, setLabeledPrice] = useState("");
+export default function AdminUpdateProductpage() {
+  const location = useLocation();
+  const [productID, setProductID] = useState(location.state.productID);
+  const [name, setName] = useState(location.state.name);
+  const [altName, setAltName] = useState(location.state.altName.join(","));
+  const [description, setDescription] = useState(location.state.description);
+  const [price, setPrice] = useState(location.state.price);
+  const [labeledPrice, setLabeledPrice] = useState(location.state.labeledPrice);
   const [files, setFiles] = useState([]);
-  const [category, setCategory] = useState("");
-  const [model, setModel] = useState("");
-  const [brand, setBrand] = useState("");
-  const [stock, setstock] = useState("");
-  const [isAvailable, setIsAvailable] = useState(false);
-  const navigate = useNavigate()
+  const [category, setCategory] = useState(location.state.category);
+  const [model, setModel] = useState(location.state.model);
+  const [brand, setBrand] = useState(location.state.brand);
+  const [stock, setstock] = useState(location.state.stock);
+  const [isAvailable, setIsAvailable] = useState(location.state.isAvailable);
+  const navigate = useNavigate();
 
-  async function addProduct() {
-    
-    const token = localStorage.getItem("token")
-    if (token == null){
-      toast.error("you must be loging as a an admin")
+  if (!location.state){
+    window.location.href = "/admin/products"
+  }
+
+  async function updateProduct() {
+    const token = localStorage.getItem("token");
+    if (token == null) {
+      toast.error("you must be loging as a an admin");
       navigate("/login");
-      return
+      return;
     }
-    console.log(files);
-    const imagePromises = []
+    const imagePromises = [];
 
-    for (let i=0; i<files.length; i++ ){
+    for (let i = 0; i < files.length; i++) {
       console.log(files[i]);
-      const promise = uploadFile(files[i])
-     imagePromises.push(promise)
-      
+      const promise = uploadFile(files[i]);
+      imagePromises.push(promise);
     }
 
-    const images = await Promise.all(imagePromises).catch((err)=>{
-      toast.error ("error uploading images,pleazse try again");
+    let images = await Promise.all(imagePromises).catch((err) => {
+      toast.error("error uploading images,pleazse try again");
       console.log("error uploading images");
       console.log(err);
-      return
-      
-     })
+      return;
+    });
+    if (images.length == 0){
+      images = location.state.images
+    }
 
-    if (productID== ""|| name== ""|| altName== ""|| description== ""){
+    if (productID == "" || name == "" || altName == "" || description == "") {
       toast.error("you must be full fill all ");
       navigate("/login");
-      return
+      return;
     }
 
-    try { 
-        const altNameArray =altName.split(",")
+    try {
+      const altNameArray = altName.split(",");
 
-      await axios.post(import.meta.env.VITE_BACKEND_URL + "/products/",{
-        productID : productID,
-        name : name,
-        altName : altNameArray,
-        description : description,
-        price : price,
-        labeledPrice : labeledPrice,
-        images : images,
-        category : category,
-        brand : brand,
-        model :model,
-        stock : stock,
-        isAvailable : isAvailable 
-
-      },{
-        headers :{
-          authorization : "Bearer "+ token
+      await axios.put(
+        import.meta.env.VITE_BACKEND_URL + "/products/"+ productID,
+        {
+          
+          name: name,
+          altName: altNameArray,
+          description: description,
+          price: price,
+          labeledPrice: labeledPrice,
+          images: images,
+          category: category,
+          brand: brand,
+          model: model,
+          stock: stock,
+          isAvailable: isAvailable,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + token,
+          },
         }
-      })
-      toast.success("product added successfully")
-      navigate("/admin/products")
-
+      );
+      toast.success("product updated successfully");
+      navigate("/admin/products");
     } catch (err) {
-        toast.error ("error adding product ,please try again");
-        console.log(("error adding  product"));
-        console.log(err);
-        
-        
-      
+      toast.error("error updating product ,please try again");
+      console.log("error updating  product");
+      console.log(err);
     }
-    
   }
 
   return (
     <div className="w-full flex justify-center items-center p-[50px] overflow-y-scroll">
       <div className="w-[800px] h-full p-[40px] bg-accent rounded-2xl ">
-        <div className="w-full  bg-amber-50 flex flex-row flex-wrap justify-between p-[20px] rounded-2xl">
+        
+        {/* 🔹 Added Headline for Update Product */}
+        <h1 className="text-3xl font-bold text-center text-white mb-6">
+          Update Product
+        </h1>
+
+        <div className="w-full bg-amber-50 flex flex-row flex-wrap justify-between p-[20px] rounded-2xl">
           <div className="my-[10px] w-[40%]">
             <label>Product ID</label>
             <input
+              disabled
               type="text"
               value={productID}
               onChange={(e) => setProductID(e.target.value)}
@@ -157,9 +166,9 @@ export default function AdminAddProductpage() {
             <label>Images</label>
             <input
               type="file"
-              multiple = {true}
+              multiple={true}
               onChange={(e) => {
-                setFiles(e.target.files)
+                setFiles(e.target.files);
               }}
               className="w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl"
             />
@@ -213,17 +222,26 @@ export default function AdminAddProductpage() {
           <div className="my-[10px]">
             <label>avalable</label>
             <select
+              type="text"
               value={isAvailable}
               onChange={(e) => setIsAvailable(e.target.value)}
               className="w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl"
             >
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
+              <option value={true}>True</option>
+              <option value={false}>False</option>
             </select>
           </div>
-          <Link to="/admin/Products" className="p-[5px] w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl text-center my-[20px] hover:bg-red-500">Cancel</Link>
-          <button onClick={addProduct} className="w-full h-[40px] bg-accent hover:bg-transparent rounded-2xl px-[20px] border shadow-2xl">
-            Add Product
+          <Link
+            to="/admin/Products"
+            className="p-[5px] w-full h-[40px] rounded-2xl px-[20px] border shadow-2xl text-center my-[20px] hover:bg-red-500"
+          >
+            Cancel
+          </Link>
+          <button
+            onClick={updateProduct}
+            className="w-full h-[40px] bg-accent hover:bg-transparent rounded-2xl px-[20px] border shadow-2xl"
+          >
+            Update Product
           </button>
         </div>
       </div>
