@@ -2,25 +2,69 @@ import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getCartTotal } from "../Utilis/cart";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function CheckoutPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [cart, setCart] = useState(location.state);
   if (location.state === null) {
     navigate("/products");
-
   }
 
-function getCartTotal (){
+  function getCartTotal() {
     let total = 0;
-    cart .forEach((item) => {
-        total += item.price * item.quantity
-    })
+    cart.forEach((item) => {
+      total += item.price * item.quantity;
+    });
     return total;
-}
+  }
 
+  async function submitOrder(){
+
+    const token = localStorage.getItem("token");
+
+    if (token == null){
+      toast.error("you must  be logged in to place an a order");
+      navigate("/login");
+      return;
+    }
+    const orderItems = []
+
+    cart.forEach((item) => {
+        orderItems.push({
+            productID :item.productID,
+            quantity : item.quantity,
+            
+        })
+
+    
+        
+    });
+
+    axios.post(import.meta.env.VITE_BACKEND_URL +"/orders",{
+        name : name,
+        address : address,
+        phone : phone,
+        items : orderItems
+
+    },{
+        headers : {
+            "Authorization" : `Bearer ${token}`
+        }
+    }  ).then((response)=>{
+        toast.success("order created successfully");
+        navigate("/orders")
+    }).catch((error)=>{
+        toast.error ("error placing order")
+    });
+    
+  }
 
   return (
     <div className="w-full flex flex-col items-center p-[20px]">
@@ -66,10 +110,10 @@ function getCartTotal (){
                   onClick={() => {
                     const copiedCart = [...cart];
                     copiedCart[index].quantity -= 1;
-                    if(copiedCart [index].quantity < 1 ){
-                        copiedCart.splice(index, 1)
+                    if (copiedCart[index].quantity < 1) {
+                      copiedCart.splice(index, 1);
                     }
-                    setCart(copiedCart)
+                    setCart(copiedCart);
                   }}
                   className="text-2xl cursor-pointer hover:text-accent transition "
                 />
@@ -81,8 +125,46 @@ function getCartTotal (){
           </div>
         );
       })}
+      <div className="w-[50%] shadow-2xl my-1 rounded p-4 flex flex-col gap-4">
+
+  {/* Name */}
+  <div className="flex flex-col w-full">
+    <label className="font-semibold mb-1">Name</label>
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      className="px-4 py-2 rounded border-2 border-secondary/30 focus:border-accent outline-none"
+    />
+  </div>
+
+  {/* Phone */}
+  <div className="flex flex-col w-full">
+    <label className="font-semibold mb-1">Phone Number</label>
+    <input
+      type="text"
+      value={phone}
+      onChange={(e) => setPhone(e.target.value)}
+      className="px-4 py-2 rounded border-2 border-secondary/30 focus:border-accent outline-none"
+    />
+  </div>
+
+  {/* Address (textarea full width) */}
+  <div className="flex flex-col w-full">
+    <label className="font-semibold mb-1">Address</label>
+    <textarea
+      value={address}
+      onChange={(e) => setAddress(e.target.value)}
+      className="px-4 py-2 rounded border-2 border-secondary/30 focus:border-accent outline-none h-[100px] resize-none w-full"
+    />
+  </div>
+
+</div>
+
       <div className="w-[50%] h-[150px] shadow-2xl my-1  rounded flex justify-between items-center">
-        <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition-all duration-200">
+        <button
+          onClick={submitOrder}
+         className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition-all duration-200">
           Place Your Order Now
         </button>
 
