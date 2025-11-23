@@ -23,15 +23,15 @@ export default function AdminProductPage() {
   }, [loaded]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-start p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 ">
+    <div className="w-screen h-full flex flex-col items-center justify-start p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 overflow-y-scroll">
       <div className="w-full max-w-6xl  bg-white/10 rounded-2xl shadow-2xl  border border-white/10">
         <div className="px-6 py-4 border-b border-white/10">
           <h1 className="text-2xl font-semibold text-amber-400 tracking-wide">Product Management</h1>
           <p className="text-sm text-gray-400 mt-1">Admin dashboard view</p>
         </div>
 
-        <div>
-         {loaded ?<table className="w-full text-sm text-left border-collapse">
+        <div className="overflow-x-scroll">
+         {loaded ?<table className="w-full text-sm text-left border-collapse ">
             <thead className="bg-gradient-to-r from-amber-500/20 to-transparent text-amber-300 uppercase text-xs font-semibold">
               <tr>
                 <th className="px-4 py-3">Image</th>

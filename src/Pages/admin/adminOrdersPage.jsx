@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loader from "../../componentes/loader";
+import ViewOrderInfo from "../../componentes/viewOrderinfo";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -34,7 +35,7 @@ export default function AdminOrdersPage() {
           <p className="text-sm text-gray-400 mt-1">Admin dashboard view</p>
         </div>
 
-        <div>
+        <div className="overflow-x-scroll">
           {loaded ? (
             <table className="w-full text-sm text-left border-collapse">
               <thead className="bg-gradient-to-r from-amber-500/20 to-transparent text-amber-300 uppercase text-xs font-semibold">
@@ -67,13 +68,13 @@ export default function AdminOrdersPage() {
                       {order.status}
                     </td>
 
-                    <td className="px-4 py-2 text-amber-400">${order.total.toFixed(2)}</td>
+                    <td className="px-4 py-2 text-amber-400">Lkr.{order.total.toFixed(2)}</td>
 
                     <td className="px-4 py-2 text-gray-400">
                       {new Date(order.date).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-2 text-gray-300">
-                      action
+                      <ViewOrderInfo order={order} />
                     </td>
                   </tr>
                 ))}

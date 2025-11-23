@@ -23,7 +23,7 @@ export default function ProductPage() {
       {!loaded ? (
         <Loader />
       ) : (
-        <div className="w-full flex justify-center ">
+        <div className="w-full flex flex-wrap lg:flex-row  justify-center gap-4">
           {products?.map((item) => (
             <ProductCard key={item.productID} product={item} />
           ))}
