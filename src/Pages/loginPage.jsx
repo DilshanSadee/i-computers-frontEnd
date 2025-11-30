@@ -2,14 +2,42 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../componentes/loader";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GrGoogle } from "react-icons/gr";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
+  const [isLoading, setISLoading] = useState(false);
+  const GoogleLogin = useGoogleLogin({
+    onSuccess : (response) =>{
+      setISLoading(true)
+      axios.post(import.meta.env.VITE_BACKEND_URL + "/users/google-login",{
+        token: response.access_token
+      }).then((res)=>{
+          localStorage.setItem("token", res.data.token);
+          if(res.data.role == "admin"){
+            navigate ("/admin")
+          }else {
+            navigate("/")
+          }
+      }).catch((err)=>{
+        console.log(err);
+        
+      })
+      toast.success("login successfully again")
+      setISLoading(false)
+
+    },
+    onError : ()=>{toast.error("google login failed")},
+    onNonOAuthError :()=>{toast.error("google login error")}
+  });
 
   async function login() {
     console.log("login button clicked");
+    setISLoading(true)
 
 
     try {
@@ -32,10 +60,13 @@ export default function LoginPage() {
         navigate("/")
       }
       toast.success("sucggg");
+      setISLoading(false);
+
     } catch (err) {
       console.log("error during log");
       console.log(err);
       toast.error("err");
+      setISLoading(false);
     }
   }
 
@@ -87,18 +118,26 @@ export default function LoginPage() {
           <button
             onClick={login}
             className="w-full h-[50px] bg-accent text-white border-[2px] border-accent hover:bg-transparent rounded-lg hover:text-accent  "
+
           >
             Login
+          </button>
+           <button
+            className="w-full h-[50px] bg-accent text-white border-[2px] border-accent hover:bg-transparent rounded-lg hover:text-accent mt-4"
+            onClick={GoogleLogin}
+          >
+            login With    <GrGoogle className=" inline ml-2 mb-1"/>
           </button>
           <p className="text-black italic ">
             don't have an account?{" "}
             <Link to="./register" className="text-blue-600 not-italic">
               {" "}
-              login here
+              Register Here
             </Link>
           </p>
         </div>
       </div>
+            {isLoading && <Loader/>}
     </div>
   );
 }

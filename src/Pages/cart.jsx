@@ -8,14 +8,26 @@ export default function CartPage() {
 
   return (
     <div className="w-full flex flex-col items-center p-[20px]">
-      {cart.map((item) => {
+      {cart.map((item, index) => {
         return (
-          <div className="w-[50%] h-[150px] shadow-2xl my-1  rounded flex justify-between">
+          <div key={index} className="w-full lg:w-[50%] relative lg:h-[150px] shadow-2xl my-1 pt-[20px] rounded flex justify-between ">
+            <h1 className="absolute top-[-15px] lg:hidden w-full overflow-hidden h-[20px] ">{item.name}</h1>
+            <div className="h-full flex flex-col ">
             <img
               src={item.image}
-              className=" h-full aspect-square object-cover"
+              className=" h-[80px]  lg:h-full aspect-square object-cover"
             />
-            <div className=" w-[300px] text-2xl flex justify-center pl-4 flex-col  ">
+              <span >{item.labeledPrice > item.price && (
+                <h2 className="text-secondary line-through text-sm ">
+                  LKR.{item.labeledPrice.toFixed(2)}
+                </h2>
+              )}
+
+              <h2 className="text-xl text-accent font-semibold mt-2 items-center  ">
+                LKR.{item.price.toFixed(2)}
+              </h2></span>
+            </div>
+            <div className=" hidden w-[300px] text-2xl lg:flex justify-center pl-4 flex-col  ">
               <h1 className="text-2xl font-semibold item-center  relative hover:[&_.tooltip]:opacity-100 inline-block ">
                 <span className=" opacity-0 tooltip italic text-sm absolute bottom-[-50px] bg-accent text-white px-2 rounded-full">
                   {item.name}
@@ -35,7 +47,7 @@ export default function CartPage() {
               </h2>
               <h3 className="text-lg mt-2">ProductID:{item.productID}</h3>
             </div>
-            <div className="h-full flex flex-row items-center gap-4">
+            <div className="min-h-full flex flex-row items-center gap-4">
                 <div className=" h-full flex flex-col justify-center items-center">
                     <BiChevronUp 
                     onClick={
@@ -62,7 +74,7 @@ export default function CartPage() {
           </div>
         );
       })}
-      <div className="w-[50%] h-[150px] shadow-2xl my-1  rounded flex justify-between items-center">
+      <div className="w-full lg:w-[50%] h-[150px] shadow-2xl my-1  rounded flex justify-between items-center">
         <Link to="/Checkout" className="self-center ml-4 px-6 py-2 bg-accent text-white hover:bg-accent/90 transition"
             state={
             cart

@@ -35,12 +35,13 @@ export default function ProductOverView() {
         <h1 className="text-center mt-10 text-2xl">Error loading product.</h1>
       )}
       {status == "success" && (
-        <div className="w-full h-[calc(100vh-100px)] flex  ">
-          <div className="w-1/2 h-full flex justify-center items-center">
+        <div className="w-full h-[calc(100vh-100px)] flex flex-col lg:flex-row  ">
+          <h1 className="text-4xl font-semibold lg:hidden text-center sticky top-0">{product.name}</h1>
+          <div className="w-full lg:w-1/2 h-full flex justify-center items-center">
             <ImageSlider images={product.images} />
           </div>
           <div className="w-1/2 h-full p-10 flex flex-col gap-6">
-            <h1 className="text-4xl font-semibold">{product.name}</h1>
+            <h1 className="text-4xl font-semibold hidden lg:block">{product.name}</h1>
             <h2 className="">{product.productID}</h2>
             <h3 className="flex">
               <BiChevronRight /> {product.category}
@@ -59,9 +60,9 @@ export default function ProductOverView() {
               </h2>
             </div>
             <div className="flex gap-5 items-center j">
-            <button onClick={ ()=>
+            <button onClick={()=>  
                 addToCart(product, 1)
-            } className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            } className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition cursor-pointer">
               Add to Cart
             </button>
             {<button onClick={
@@ -77,7 +78,7 @@ export default function ProductOverView() {
                 }] })
                 
               }
-            } className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition">
+            } className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition cursor-pointer">
               Buy Now
             </button> }
             </div>

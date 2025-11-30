@@ -24,9 +24,11 @@ export default function Header() {
         <Link to="/about">About </Link>
         <Link to="/contact">Contact </Link>
       </div>
+
+    <div className="absolute right-30 top-1/2 -translate-y-1/2 z-20 hidden lg:flex flex-row"><UserData/></div>
       <Link
         to="/cart"
-        className=" absolute right-4 top-1/2 text-white text-2xl"
+        className=" absolute right-4 top-1/3 text-white text-2xl"
       >
         <BiShoppingBag />
       </Link>
@@ -82,6 +84,9 @@ export default function Header() {
                 >
                   Contact
                 </a>
+                <div className="absolute right-0 top-[130px]">
+                <UserData/>
+                </div>
               </div>
             </div>
           </div>
