@@ -3,10 +3,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Modal from "react-modal";
 
-export default function ViewOrderInfo({ order }) {
+export default function ViewCustomerInfo({ order }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notes, setNotes] = useState(order.notes);
-  const [status, setStatus] = useState(order.status);
   Modal.setAppElement("#root");
   return (
     <>
@@ -73,8 +71,8 @@ export default function ViewOrderInfo({ order }) {
 
               <div>
                 <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                  //value={status}
+                  disabled
                   className="ml-4 px-2 py-1 border-secondary rounded text-md outline-none "
                 >
                   <option value="pending">Pending</option>
@@ -128,53 +126,13 @@ export default function ViewOrderInfo({ order }) {
               <label className="font-medium text-gray-700">Notes:</label>
               <textarea
                 className="w-full mt-1 p-2 border rounded text-gray-700 bg-white"
-                value={notes}
-                onChange={(e) => {
-                  setNotes(e.target.value);
-                }}
+                value={order.notes || " no additional notes" }
+                disabled
               />
             </div>
           </div>
 
           <div className="mt-6 flex justify-end gap-4">
-            {(order.notes !== notes || order.status !== status) && (
-              <button
-                onClick={async () => {
-                  try {
-                    const token = localStorage.getItem("token");
-
-                    await axios.put(
-                      `${import.meta.env.VITE_BACKEND_URL}/orders/${
-                        order.orderId
-                      }`,
-                      {
-                        status: status,
-                        notes: notes,
-                      },
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                        },
-                      }
-                    );
-
-                    // Update local order object so UI reflects changes immediately
-                    order.notes = notes;
-                    order.status = status;
-
-                    toast.success("Order updated successfully");
-                    window.location.reload();
-                  } catch (error) {
-                    console.error(error);
-                    toast.error("Failed to update order");
-                  }
-                }}
-                className="bg-accent text-white px-4 py-2 rounded-lg hover:bg-accent/80"
-              >
-                Save Changes
-              </button>
-            )}
-
             <button
               onClick={() => setIsModalOpen(false)}
               className="bg-accent text-white px-4 py-2 rounded-lg hover:bg-accent/80"

@@ -46,6 +46,15 @@ export default function ProductOverView() {
             <h3 className="flex">
               <BiChevronRight /> {product.category}
             </h3>
+            <div className="w-full italic">
+            {
+              product.altName && product.altName.length > 0 && (
+                <h3 className="text-md text-black/80">
+                  Alternative Name : {product.altName.join(", ")}
+                </h3>
+              )
+            }
+            </div>
             <p className="text-md text-justify text-secondary h-10  overflow-y-auto">
               {product.description}
             </p>

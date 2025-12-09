@@ -10,20 +10,20 @@ export default function CartPage() {
     <div className="w-full flex flex-col items-center p-[20px]">
       {cart.map((item, index) => {
         return (
-          <div key={index} className="w-full lg:w-[50%] relative lg:h-[150px] shadow-2xl my-1 pt-[20px] rounded flex justify-between ">
+          <div key={index} className=" w-full lg:w-[50%] relative lg:h-[150px] shadow-2xl my-1 pt-[20px] rounded flex justify-between ">
             <h1 className="absolute top-[-15px] lg:hidden w-full overflow-hidden h-[20px] ">{item.name}</h1>
-            <div className="h-full flex flex-col ">
+            <div className="h-full flex flex-col">
             <img
               src={item.image}
               className=" h-[80px]  lg:h-full aspect-square object-cover"
             />
               <span >{item.labeledPrice > item.price && (
-                <h2 className="text-secondary line-through text-sm ">
+                <h2 className="text-secondary line-through text-sm lg:hidden ">
                   LKR.{item.labeledPrice.toFixed(2)}
                 </h2>
               )}
 
-              <h2 className="text-xl text-accent font-semibold mt-2 items-center  ">
+              <h2 className="text-xl text-accent font-semibold mt-2 items-center  lg:hidden ">
                 LKR.{item.price.toFixed(2)}
               </h2></span>
             </div>

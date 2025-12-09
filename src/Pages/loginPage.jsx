@@ -110,9 +110,9 @@ export default function LoginPage() {
           />
           <p className="text-black italic w-full text-right mb-[20px] ">
             forget Your Password?{" "}
-            <Link to="./forgetPassword" className="text-blue-600 not-italic">
-              {" "}
-              Rest it here
+            <Link to="/forgetPassword" className="text-blue-600 not-italic">
+              
+              Reset it here
             </Link>
           </p>
           <button

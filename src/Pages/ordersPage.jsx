@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewOrderInfo from "../../componentes/viewOrderinfo";
-import Loader from "../../componentes/loader";
+import ViewOrderInfo from "../componentes/viewOrderinfo";
+import Loader from "../componentes/loader";
+import ViewCustomerInfo from "../componentes/viewCustomerInfo";
 
-export default function AdminOrdersPage() {
+export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -32,7 +33,7 @@ export default function AdminOrdersPage() {
           <h1 className="text-2xl font-semibold text-amber-400 tracking-wide">
             Order Management
           </h1>
-          <p className="text-sm text-gray-400 mt-1">Admin dashboard view</p>
+          <p className="text-sm text-gray-400 mt-1">Customer dashboard view</p>
         </div>
 
         <div className="overflow-x-scroll">
@@ -74,7 +75,7 @@ export default function AdminOrdersPage() {
                       {new Date(order.date).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-2 text-gray-300">
-                      <ViewOrderInfo order={order} />
+                      <ViewCustomerInfo order={order} />
                     </td>
                   </tr>
                 ))}
