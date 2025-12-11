@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewOrderInfo from "../../componentes/viewOrderinfo";
-import Loader from "../../componentes/loader";
+import ViewOrderInfo from "../../components/viewOrderinfo"
+import Loader from "../../components/loader";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);

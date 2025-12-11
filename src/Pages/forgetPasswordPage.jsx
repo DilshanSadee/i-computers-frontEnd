@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react"
 import toast from "react-hot-toast";
-import Loader from "../componentes/loader";
+import Loader from "../components/loader";
 import { useNavigate } from "react-router-dom";
 
 export default function ForgetPasswordPage(){

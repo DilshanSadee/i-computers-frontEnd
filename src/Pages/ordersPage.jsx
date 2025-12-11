@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewOrderInfo from "../componentes/viewOrderinfo";
-import Loader from "../componentes/loader";
-import ViewCustomerInfo from "../componentes/viewCustomerInfo";
+import Loader from "../components/loader";
+import ViewCustomerInfo from "../components/viewCustomerInfo";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);

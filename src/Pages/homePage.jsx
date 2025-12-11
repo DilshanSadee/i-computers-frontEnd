@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Header from "../componentes/header"
-import ProductPage from "../componentes/productPage"
+import Header from "../components/header"
+import ProductPage from "../components/productPage"
 import ProductOverView from "./productOverViewPage"
 import CartPage from "./cart"
 import CheckoutPage from "./checkOut"

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Loader from "../componentes/loader";
+import Loader from "../components/loader";
 import toast from "react-hot-toast";
-import ImageSlider from "../componentes/imageSlider";
+import ImageSlider from "../components/imageSlider";
 import { BiChevronRight } from "react-icons/bi";
 import { addToCart, } from "../Utilis/cart";
 
