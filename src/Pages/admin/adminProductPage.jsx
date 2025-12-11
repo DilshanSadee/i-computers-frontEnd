@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "../../componentes/loader";
-import ProductDeleteButton from "../../componentes/productDeleteButton.Jsx";
+import Loader from "../../components/loader";
+import ProductDeleteButton from "../../components/productDeleteButton"
 
 
 export default function AdminProductPage() {
