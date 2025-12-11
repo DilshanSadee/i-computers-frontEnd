@@ -71,10 +71,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full h-screen bg-[url(./bg.jpg)] bg-center bg-cover bg-no-repeat flex ">
+    <div className="w-full h-screen bg-[url('/bg.jpg')] bg-center bg-cover bg-no-repeat flex ">
       <div className="w-[50%] h-full flex  flex-col justify-center items-center text-shadow-accent">
         <img
-          src="./logo.png "
+          src="./logo.png"
           className="w-[300px] h-[100px] object-cover"
           alt=""
         />
