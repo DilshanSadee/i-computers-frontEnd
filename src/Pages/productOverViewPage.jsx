@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import ImageSlider from "../components/imageSlider";
 import { BiChevronRight } from "react-icons/bi";
 import { addToCart, } from "../Utilis/cart";
+import ProductReviews from "../components/productReview";
 
 export default function ProductOverView() {
   const navigate = useNavigate()
@@ -91,6 +92,7 @@ export default function ProductOverView() {
               Buy Now
             </button> }
             </div>
+            <div><ProductReviews productID={product.productID} /></div>
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import ProductOverView from "./productOverViewPage"
 import CartPage from "./cart"
 import CheckoutPage from "./checkOut"
 import OrdersPage from "./ordersPage"
+import Home from "./homeContent"
 
 
 
@@ -15,7 +16,7 @@ export default function HomePage(){
             <div className="w-full min-h-[calc(100%-100px)] ">
 
             <Routes>
-                <Route path="/" element={<h1>HomePage</h1>}/>
+                <Route path="/" element={<Home/>}/>
                 <Route path="/products" element={<ProductPage/>}/>
                 <Route path="/about" element={<h1>Abut Page</h1>}/>
                 <Route path="/contact" element={<h1>Contact Page</h1>}/>

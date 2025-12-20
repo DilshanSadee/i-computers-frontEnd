@@ -8,7 +8,7 @@ export default function ProductCard(props) {
       <div className=" w-[400px] h-[300px] lg:w-full lg:h-full  relative">
         <img
           src={product.images[1]}
-          className="w-full h-full absolute b "
+          className="w-full h-full absolute"
         />
         <img
           src={product.images[0]}
