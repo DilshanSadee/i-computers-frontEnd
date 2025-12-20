@@ -4,57 +4,58 @@ import toast from "react-hot-toast";
 
 export default function ProductReviews({ productID }) {
   const [reviews, setReviews] = useState([]);
-  const [reviewStatus, setReviewStatus] = useState("loading");
+  const [status, setStatus] = useState("loading"); // 'loading', 'success', 'error'
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
-  // Trim productID to avoid newline issues (%0A)
   const cleanProductID = productID?.trim();
 
-  // Fetch reviews when component mounts or productID changes
+  // Fetch reviews
   useEffect(() => {
     if (!cleanProductID) return;
 
-    const url = `${import.meta.env.VITE_BACKEND_URL}/reviews/products/${cleanProductID}/reviews`;
-    console.log("Fetching reviews from:", url);
-
-    setReviewStatus("loading");
-    axios
-      .get(url)
-      .then((res) => {
+    const fetchReviews = async () => {
+      setStatus("loading");
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/reviews/products/${cleanProductID}/reviews`
+        );
         setReviews(res.data);
-        setReviewStatus("success");
-      })
-      .catch(() => setReviewStatus("error"));
+        setStatus("success");
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setStatus("error");
+      }
+    };
+
+    fetchReviews();
   }, [cleanProductID]);
 
-  // Handle adding a new review
-  const handleAddReview = () => {
-    if (!cleanProductID) {
-      toast.error("Product ID not ready");
-      return;
-    }
-    if (!comment.trim()) {
-      toast.error("Please write a comment");
-      return;
-    }
+  // Handle adding review
+  const handleAddReview = async () => {
+    if (!cleanProductID) return toast.error("Product ID not ready");
+    if (!comment.trim()) return toast.error("Please write a comment");
 
-    const url = `${import.meta.env.VITE_BACKEND_URL}/reviews/products/${cleanProductID}/reviews`;
-    console.log("Posting review to:", url);
-
-    axios
-      .post(url, {
-        userName: "Guest User", // Replace with logged-in user
-        rating,
-        comment,
-      })
-      .then((res) => {
-        toast.success("Review added successfully!");
-        setReviews([res.data, ...reviews]); // Add new review on top
-        setComment("");
-        setRating(5);
-      })
-      .catch(() => toast.error("Failed to add review"));
+    setIsPosting(true);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/reviews/products/${cleanProductID}/reviews`,
+        {
+          userName: "Guest User", // Replace with logged-in user
+          rating,
+          comment,
+        }
+      );
+      toast.success("Review added successfully!");
+      setReviews([res.data, ...reviews]); // Optimistic update
+      setComment("");
+      setRating(5);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to add review");
+    } finally {
+      setIsPosting(false);
+    }
   };
 
   return (
@@ -62,14 +63,15 @@ export default function ProductReviews({ productID }) {
       <h2 className="text-2xl font-semibold mb-4">Customer Reviews</h2>
 
       {/* Review Status */}
-      {reviewStatus === "loading" && <p>Loading reviews...</p>}
-      {reviewStatus === "error" && <p>Error loading reviews.</p>}
+      {status === "loading" && <p>Loading reviews...</p>}
+      {status === "error" && <p className="text-red-500">Error loading reviews.</p>}
 
       {/* Reviews List */}
-      {reviewStatus === "success" && reviews.length === 0 && (
-        <p className="text-gray-500">No reviews yet.</p>
+      {status === "success" && reviews.length === 0 && (
+        <p className="text-gray-500">No reviews yet. Be the first to review!</p>
       )}
-      {reviewStatus === "success" && reviews.length > 0 && (
+
+      {status === "success" && reviews.length > 0 && (
         <div className="flex flex-col gap-4">
           {reviews.map((review) => (
             <div key={review._id} className="border p-4 rounded">
@@ -113,9 +115,12 @@ export default function ProductReviews({ productID }) {
 
         <button
           onClick={handleAddReview}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          disabled={isPosting}
+          className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ${
+            isPosting ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Submit Review
+          {isPosting ? "Submitting..." : "Submit Review"}
         </button>
       </div>
     </div>
